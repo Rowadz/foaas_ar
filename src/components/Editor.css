@@ -1,0 +1,6 @@
+@import '~antd/dist/antd.css';
+
+.ant-page-header-heading-title {
+  float: right;
+  color: #f1f1f1;
+}

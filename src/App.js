@@ -1,55 +1,32 @@
 import React, { useState } from 'react'
-import './App.css'
 import { PageHeader } from 'antd'
-import { Row, Col } from 'antd'
-import { Card } from 'antd'
-import { Input } from 'antd'
-import { AlertTwoTone } from '@ant-design/icons'
+import Editor from './components/Editor'
+import Mgs from './components/Mgs'
 const queryString = require('query-string')
 
 function App() {
-  const [state, setState] = useState({
-    query: queryString.parse(window.location.search),
-    name: null
+  const [state] = useState({
+    query: queryString.parse(window.location.search)
   })
-
   const weHaveQuery = Object.keys(state.query).length > 0
-  console.log(weHaveQuery)
-  const nameChange = (e) => {
-    setState({ ...state, name: e.target.value })
-  }
 
-  const navigate = () => {
-    const { pathname } = window.location
-    const { name } = state
-    window.location.href = `${pathname}?` + queryString.stringify({ name })
+  let page
+  if (weHaveQuery) {
+    page = <Mgs />
+  } else {
+    page = <Editor />
   }
-
   return (
-    <main>
+    <section>
       <PageHeader
         ghost="true"
         style={{ background: '#0F0F0F' }}
         backIcon="false"
-        title="تحلسـ \ يـ طيزي كخدمة"
+        title="💓تحلسـ طيزي كخدمة💓"
         // subTitle="This is a subtitle"
       />
-      <Row>
-        <Col span={24} style={{ padding: '50px 50px' }}>
-          <Card
-            title="اكتبـ \ يـ الاسم"
-            actions={[<AlertTwoTone key="setting" onClick={navigate} />]}
-          >
-            <Input
-              size="large"
-              value={state.name}
-              placeholder="اسم"
-              onChange={nameChange}
-            />
-          </Card>
-        </Col>
-      </Row>
-    </main>
+      {page}
+    </section>
   )
 }
 
